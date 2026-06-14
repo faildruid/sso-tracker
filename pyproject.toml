@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sso-tracker"
+version = "1.0.0"
+description = "CLI tracker for the Shattered Sun Offensive reputation grind."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+sso = "sso_tracker.cli:entry_point"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sso_tracker"]
+
+# --------------------------------------------------------------------------- #
+# uv                                                                           #
+# --------------------------------------------------------------------------- #
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.4",
+]
+
+# --------------------------------------------------------------------------- #
+# Ruff                                                                         #
+# --------------------------------------------------------------------------- #
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["sso_tracker"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# --------------------------------------------------------------------------- #
+# pytest                                                                       #
+# --------------------------------------------------------------------------- #
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["src/sso_tracker"]
